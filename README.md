@@ -21,7 +21,7 @@ At this stage in the project, the program uses REST API along with JPA. It is ab
 ## Lessons Learned
 
 
-Implementation of REST interactions with JPA. Also keep improving my familiariaty with MySQL Workbench, Postman, creating POJOs using JPA. Understanding how to send and receive JSON.  
+Implementation of REST interactions with JPA. Also keep improving my familiarity with MySQL Workbench, Postman, creating POJOs using JPA. Understanding how to send and receive JSON.  
 
 
 
