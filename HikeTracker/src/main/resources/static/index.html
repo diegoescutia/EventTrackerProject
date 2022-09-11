@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hike Tracker</title>
+<script type="text/javascript" src="js/script.js"></script>
+</head>
+<body>
+	<h1>Welcome to Hike Tracker</h1>
+
+<div id="eventList">
+
+<table>
+<thead></thead>
+<tbody id="routeRows"></tbody>
+</table>
+
+</div>
+
+<div id="routeTableDiv">
+	<table>
+	<thead></thead>
+	<tbody id="routeTable"></tbody>
+	</table>
+	</div>
+
+<div id="addRouteForm">
+<h3>Add a new Hike</h3>
+
+<form name="newRouteForm">
+<label for="date">Date:</label>
+<input type="date" name='date'> <br>
+
+<label for="location">Location:</label>
+<input type="text" name="location"> <br>
+
+<label for="distance"> Distance:</label>
+<input type="number" name="distance" > <br>
+
+<label for="time">Time:</label>
+<input type="time" name="time"> <br>
+
+<label for="pace">Pace:</label>
+<input type="number" name="pace"> <br>
+
+<label for="description">Description:</label>
+<textarea rows="2" cols="40" name="description"></textarea> <br>
+
+<button name="addRoute">Add Hike</button>
+</form>
+
+</div>
+
+
+	<div id="output">
+		<div id="routeData"></div>
+	</div>
+	
+</body>
+</html>
