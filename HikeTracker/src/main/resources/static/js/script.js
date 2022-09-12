@@ -71,8 +71,12 @@ function displayAllRoutes(eventList) {
 
 			let ul = document.createElement('ul');
 			dataDiv.appendChild(ul)
-
+			
 			let li = document.createElement('li');
+			li.textContent = 'Id: ' + route.id;
+			ul.appendChild(li);
+
+			li = document.createElement('li');
 			li.textContent = 'Date: ' + route.date;
 			ul.appendChild(li);
 
@@ -95,9 +99,26 @@ function displayAllRoutes(eventList) {
 			li = document.createElement('li');
 			li.textContent = "Description: " + route.description;
 			ul.appendChild(li)
-			
-			updateRoute(route);
 
+			
+
+			let remove = document.createElement('button');
+			remove.textContent = 'Delete';
+
+			remove.addEventListener('click', function(e) {
+				deleteHike(route);
+			});
+			
+			dataDiv.appendChild(remove);
+			
+			let edit = document.createElement('button');
+			edit.textContent = 'Edit';
+
+			edit.addEventListener('click', function(e) {
+				updateRoute(route);
+			});
+			
+			dataDiv.appendChild(edit);
 		});
 
 
@@ -162,10 +183,10 @@ function addRoute(route) {
 				displayRoute(JSON.parse(xhr.responseText));
 			}
 			else if (xhr.status === 400) {
-				displayError('Invalid data');
+				console.log('Invalid data');
 			}
 			else {
-				displayError('Error creating Hike: ' + xhr.status);
+				console.log('Error creating Hike: ' + xhr.status);
 			}
 		}
 	}
@@ -250,18 +271,18 @@ function updateRoute(route) {
 	button.textContent = "Update Hike";
 	button.setAttribute('id', 'updateRoute');
 	button.addEventListener('click', function(e) {
-		//e.preventDefault();
+		e.preventDefault();
 
 
 		let updateRoute = {
-		
-		date: updateForm.date,
-		location: updateForm.location,
-		distance: updateForm.distance,
-		time: updateForm.time,
-		pace: updateForm.pace, 
-		description: updateForm.description
-};
+
+			date: updateForm.date.value,
+			location: updateForm.location.value,
+			distance: updateForm.distance.value,
+			time: updateForm.time.value,
+			pace: updateForm.pace.value,
+			description: updateForm.description.value
+		};
 		sendUpdate(updateRoute);
 		updateForm.textContent = '';
 	});
@@ -274,11 +295,12 @@ function sendUpdate(route) {
 	xhr.open('PATCH', `api/routes/${route.id}`);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
-			if (xhr.status < 200) {
+			if (xhr.status < 201) {
 				let route = JSON.parse(xhr.responseText);
 				console.log('Updated Hike');
+				
 			} else {
-				console.log('Error updating food: ' + xhr.status);
+				console.log('Error updating: ' + xhr.status);
 			}
 		}
 	};
@@ -286,4 +308,23 @@ function sendUpdate(route) {
 	xhr.send(JSON.stringify(route));
 }
 
+function deleteHike(route) {
+	let xhr = new XMLHttpRequest();
+	xhr.open('DELETE', `api/routes/${route.id}`);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status < 400) {
+				console.log('Hike was deleted');
+				deleteMessage();
+			} else {
+				console.log('Error deleting hike: ' + xhr.status);
+			}
+		}
+	};
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send(JSON.stringify(route));
+}
 
+function deleteMessage(){
+	window.alert('Hike was successfuly deleted. Refresh the page');
+}
