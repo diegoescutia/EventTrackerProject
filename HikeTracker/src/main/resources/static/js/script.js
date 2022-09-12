@@ -19,13 +19,7 @@ function init() {
 		route.description = newRouteForm.description.value;
 
 		addRoute(route);
-
-
 	});
-
-
-
-
 }
 
 function loadAllRoutes() {
@@ -41,7 +35,6 @@ function loadAllRoutes() {
 			}
 		}
 	};
-
 	xhr.send();
 }
 
@@ -71,7 +64,7 @@ function displayAllRoutes(eventList) {
 
 			let ul = document.createElement('ul');
 			dataDiv.appendChild(ul)
-			
+
 			let li = document.createElement('li');
 			li.textContent = 'Id: ' + route.id;
 			ul.appendChild(li);
@@ -100,7 +93,7 @@ function displayAllRoutes(eventList) {
 			li.textContent = "Description: " + route.description;
 			ul.appendChild(li)
 
-			
+
 
 			let remove = document.createElement('button');
 			remove.textContent = 'Delete';
@@ -108,37 +101,27 @@ function displayAllRoutes(eventList) {
 			remove.addEventListener('click', function(e) {
 				deleteHike(route);
 			});
-			
+
 			dataDiv.appendChild(remove);
-			
+
 			let edit = document.createElement('button');
 			edit.textContent = 'Edit';
 
 			edit.addEventListener('click', function(e) {
 				updateRoute(route);
 			});
-			
+
 			dataDiv.appendChild(edit);
 		});
-
-
-
-
-
 	}
-
-
-
-
-
 }
 
 
 
 
 function displayRoute(route) {
-	let dataDiv = document.getElementById('routeData');
-	dataDiv.textContent = '';
+	//let dataDiv = document.getElementById('routeData');
+	//dataDiv.textContent = '';
 
 	let date = document.createElement('h3');
 	date.textContent = "Hike was Succesfully Logged";
@@ -194,9 +177,6 @@ function addRoute(route) {
 	let routeJson = JSON.stringify(route);
 	xhr.send(routeJson);
 }
-
-
-
 
 
 function updateRoute(route) {
@@ -284,7 +264,6 @@ function updateRoute(route) {
 			description: updateForm.description.value
 		};
 		sendUpdate(updateRoute);
-		updateForm.textContent = '';
 	});
 	updateForm.appendChild(button);
 	div.appendChild(updateForm);
@@ -298,7 +277,8 @@ function sendUpdate(route) {
 			if (xhr.status < 201) {
 				let route = JSON.parse(xhr.responseText);
 				console.log('Updated Hike');
-				
+
+
 			} else {
 				console.log('Error updating: ' + xhr.status);
 			}
@@ -325,6 +305,6 @@ function deleteHike(route) {
 	xhr.send(JSON.stringify(route));
 }
 
-function deleteMessage(){
+function deleteMessage() {
 	window.alert('Hike was successfuly deleted. Refresh the page');
 }
