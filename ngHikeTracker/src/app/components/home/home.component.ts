@@ -36,6 +36,9 @@ export class HomeComponent implements OnInit {
       }
     )
   }
+  displayHike(hike: Hike){
+    this.selected = hike;
+  }
 
   displayTable(){
     this.selected = null;
@@ -77,7 +80,7 @@ export class HomeComponent implements OnInit {
 
    }
 
-   deleteTodo(id: number) {
+   deleteHike(id: number) {
     this.hikeService.destroy(id).subscribe(
       {
         next: () => {

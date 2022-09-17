@@ -1,7 +1,7 @@
 
 <h4>Total Number of Hikes: {{totalNumberOfHikes()}}</h4>
 
-<table>
+<table class="table table-hover table-dark">
   <thead>
     <tr>
       <th>Date</th>
@@ -9,9 +9,43 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let hike of hikes">
+    <tr *ngFor="let hike of hikes" (click)="displayHike(hike)">
       <td>{{hike.date}}</td>
       <td>{{hike.location}}</td>
     </tr>
   </tbody>
 </table>
+
+<form>
+ Date: <input type="date" name="date" [(ngModel)]="newHike.date"> <br>
+ Location: <input type="text" name="location" [(ngModel)]="newHike.location"> <br>
+ Distance:<input type="number" name="distance" [(ngModel)]="newHike.distance"><br>
+ Time: <input type="time" name="time" [(ngModel)]="newHike.time" >
+ Pace: <input type="number" name="pace" [(ngModel)]="newHike.pace"><br>
+ Description: <input type="text" name="description" [(ngModel)]="newHike.description"><br>
+  <button (click)="addHike()" class="btn btn-success">ADD HIKE</button>
+</form>
+
+<div *ngIf="selected && !editHike">
+  <p>ID: {{selected.id}}</p>
+  <p>Date: {{selected.date}}</p>
+  <p>Location: {{selected.location}}</p>
+  <p>Time: {{selected.time}}</p>
+  <p>Distance: {{selected.distance}}</p>
+  <p>Pace: {{selected.pace}}</p>
+  <p>Description: {{selected.description}}</p>
+  <button (click)="displayTable()" class="btn btn-secondary">Back</button>
+  <button (click)="setEditHike()" class="btn btn-info">Edit</button>
+  <button (click)="deleteHike(selected.id)" class="btn btn-danger">Delete</button>
+</div>
+
+<form *ngIf="editHike">
+  Date: <input type="date" name="date" [(ngModel)]="editHike.date"> <br>
+  Location: <input type="text" name="location" [(ngModel)]="editHike.location"> <br>
+  Distance:<input type="number" name="distance" [(ngModel)]="editHike.distance"><br>
+  Time:<input type="time" name="time" [(ngModel)]="editHike.time"><br>
+  Pace: <input type="number" name="pace" [(ngModel)]="editHike.pace"><br>
+  Description: <input type="text" name="description" [(ngModel)]="editHike.description"><br>
+  <button (click)="editHike = null" class="btn btn-danger">Cancel</button>
+  <button (click)="updateHike(editHike)" class="btn btn-success">Save HIKE</button>
+</form>

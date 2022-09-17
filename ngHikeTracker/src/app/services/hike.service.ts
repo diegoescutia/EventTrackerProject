@@ -42,7 +42,7 @@ create(hike: Hike) {
  }
 
  update(hike: Hike) {
-  return this.http.put<Hike>(this.url + '/' + hike.id, hike).pipe(
+  return this.http.patch<Hike>(this.url + '/' + hike.id, hike).pipe(
     catchError((err: any) => {
       console.log(err);
       return throwError(
