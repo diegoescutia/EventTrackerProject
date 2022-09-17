@@ -1,3 +1,4 @@
+import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Hike } from 'src/app/models/hike';
 import { HikeService } from 'src/app/services/hike.service';
@@ -13,6 +14,7 @@ export class HomeComponent implements OnInit {
   newHike: Hike = new Hike();
   editHike: Hike | null = null;
   hikes: Hike[] = [];
+  today: number = Date.now();
 
 
   constructor(
@@ -97,4 +99,26 @@ export class HomeComponent implements OnInit {
   totalNumberOfHikes(){
     return this.hikes.length
   }
+
+  totalNumberOfMiles(){
+    let miles: number = 0;
+    for(let hike of this.hikes){
+     miles += hike.distance;
+    }
+    return miles;
+  }
+
+  averagePace(){
+    let pace: number = 0;
+    for(let hike of this.hikes){
+     pace = (pace + hike.pace);
+    }
+    return pace/this.hikes.length;
+  }
+
+  distanceComparison(){
+   let percent:number= (this.totalNumberOfMiles()/3100)*100;
+   return percent;
+  }
+
 }
