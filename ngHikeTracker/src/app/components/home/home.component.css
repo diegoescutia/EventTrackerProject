@@ -28,3 +28,7 @@ body{
   color: azure;
 }
 
+.details{
+  text-align: center;
+  font-size: 30px;
+}

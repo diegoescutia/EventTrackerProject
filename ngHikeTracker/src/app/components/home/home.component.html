@@ -52,7 +52,7 @@
 </div>
 
 
-<div *ngIf="selected && !editHike">
+<div *ngIf="selected && !editHike" class="details">
   <p>ID: {{selected.id}}</p>
   <p>Date: {{selected.date | date:'longDate'}}</p>
   <p>Location: {{selected.location}}</p>
@@ -66,12 +66,12 @@
 </div>
 
 <form *ngIf="editHike">
-  Date: <input type="date" name="date" [(ngModel)]="editHike.date"> <br>
-  Location: <input type="text" name="location" [(ngModel)]="editHike.location"> <br>
-  Distance:<input type="number" name="distance" [(ngModel)]="editHike.distance"><br>
-  Time:<input type="time" name="time" [(ngModel)]="editHike.time"><br>
-  Pace: <input type="number" name="pace" [(ngModel)]="editHike.pace"><br>
-  Description: <input type="text" name="description" [(ngModel)]="editHike.description"><br>
+  Date: <input class="form-control" type="date" name="date" [(ngModel)]="editHike.date"> <br>
+  Location: <input class="form-control" type="text" name="location" [(ngModel)]="editHike.location"> <br>
+  Distance:<input class="form-control" type="number" name="distance" [(ngModel)]="editHike.distance"><br>
+  Time:<input  class="form-control" type="time" name="time" [(ngModel)]="editHike.time"><br>
+  Pace: <input class="form-control" type="number" name="pace" [(ngModel)]="editHike.pace"><br>
+  Description: <input  class="form-control"type="text" name="description" [(ngModel)]="editHike.description"><br>
   <button (click)="editHike = null" class="btn btn-danger">Cancel</button>
   <button (click)="updateHike(editHike)" class="btn btn-success">Save HIKE</button>
 </form>
