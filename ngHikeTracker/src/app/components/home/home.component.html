@@ -1,6 +1,15 @@
-<h1>Welcome to Hike Tracker</h1>
-<h3>Today is:</h3>
-<h3>{{today | date: 'fullDate'}}</h3>
+<body>
+
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Welcome to Hike Tracker</h1>
+    <p class="lead">Climb harder... Embrace the suck... Keep pushing...  Discover! </p>
+    <p >This is an app where you can keep track of all the hikes that you ever do.</p>
+    <p>Today is: {{today | date: 'fullDate'}}</p>
+  </div>
+</div>
+
 <hr class="my-4">
 <div *ngIf="!selected">
   <table class="table table-hover table-dark" >
@@ -18,23 +27,28 @@
     </tbody>
   </table>
   <hr class="my-4">
-  <h4>Total Number of Hikes: {{totalNumberOfHikes()}}</h4>
+  <h4>Total Number of Hikes: {{totalNumberOfHikes()}}</h4> <br>
   <h4>Total Number of Miles: {{totalNumberOfMiles() | number:'1.1-1'}} </h4>
   Equivalent of completing {{distanceComparison() | number:'1.1-2'}}% of the Continental Divide Trail (3,100 miles)
   <div class="progress">
-    <div class="progress-bar" role="progressbar"  aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">{{distanceComparison()| number:'1.1-2'}}%</div>
-  </div>
-  <h4>Average Pace: {{averagePace() | number:'1.1-1'}}</h4>
+    <div id="bar" class="progress-bar" role="progressbar"  aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">{{distanceComparison()| number:'1.1-2'}}%</div>
+  </div> <br>
+  <h4>Average Pace: {{averagePace() | number:'1.1-1'}} mins/mile</h4>
   <hr class="my-4">
-<form>
- Date: <input type="date" name="date" [(ngModel)]="newHike.date"> <br>
- Location: <input type="text" name="location" [(ngModel)]="newHike.location"> <br>
- Distance:<input type="number" name="distance" [(ngModel)]="newHike.distance"><br>
- Time: <input type="time" name="time" [(ngModel)]="newHike.time" > <br>
- Pace: <input type="number" name="pace" [(ngModel)]="newHike.pace"><br>
- Description: <input type="text" name="description" [(ngModel)]="newHike.description"><br>
+
+ <div class="newForm">
+<form class="form-group">
+<h4>Add a new Hike:</h4>
+ Date: <input class="form-control" type="date" name="date" [(ngModel)]="newHike.date"> <br>
+ Location: <input class="form-control" type="text" name="location" [(ngModel)]="newHike.location"> <br>
+ Distance:<input class="form-control" type="number" name="distance" [(ngModel)]="newHike.distance"><br>
+ Time: <input class="form-control" type="time" name="time" [(ngModel)]="newHike.time" > <br>
+ Pace: <input class="form-control" type="number" name="pace" [(ngModel)]="newHike.pace"><br>
+ Description: <input class="form-control" type="text" name="description" [(ngModel)]="newHike.description"><br>
   <button (click)="addHike()" class="btn btn-success">ADD HIKE</button>
 </form>
+</div>
+
 </div>
 
 
@@ -61,3 +75,4 @@
   <button (click)="editHike = null" class="btn btn-danger">Cancel</button>
   <button (click)="updateHike(editHike)" class="btn btn-success">Save HIKE</button>
 </form>
+</body>
