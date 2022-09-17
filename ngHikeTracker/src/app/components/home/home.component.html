@@ -1,0 +1,17 @@
+
+<h4>Total Number of Hikes: {{totalNumberOfHikes()}}</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let hike of hikes">
+      <td>{{hike.date}}</td>
+      <td>{{hike.location}}</td>
+    </tr>
+  </tbody>
+</table>
