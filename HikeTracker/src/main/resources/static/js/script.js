@@ -160,6 +160,7 @@ function addRoute(route) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', 'api/routes');
 	xhr.onreadystatechange = function() {
+		console.log("inside of addRoute")
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.status === 201) {
 				console.log('Hike created')
@@ -180,13 +181,13 @@ function addRoute(route) {
 
 
 function updateRoute(route) {
-
 	let tbody = document.getElementById('routeTable')
 	tbody.textContent = '';
 
 	let updateForm = document.createElement('form');
 	updateForm.setAttribute('name', 'updateForm');
-	let div = document.getElementById('routeTableDiv');
+	let div = document.getElementById('detail');
+	div.appendChild(updateForm);
 
 	let routeDate = document.createElement('label');
 	routeDate.textContent = "Date: "
@@ -231,7 +232,7 @@ function updateRoute(route) {
 	routePace.textContent = "Pace: "
 	let paceInput = document.createElement('input');
 	paceInput.setAttribute('name', 'pace');
-	paceInput.setAttribute('value', route.pace);
+	//paceInput.setAttribute('value', route.pace);
 	paceInput.setAttribute('type', 'number');
 	updateForm.appendChild(routePace);
 	updateForm.appendChild(paceInput);
@@ -241,53 +242,118 @@ function updateRoute(route) {
 	routeDescription.textContent = "Description: "
 	let descriptionInput = document.createElement('input');
 	descriptionInput.setAttribute('name', 'route');
-	descriptionInput.setAttribute('value', route.description);
+	//descriptionInput.setAttribute('value', route.description);
 	descriptionInput.setAttribute('type', 'textarea');
 	updateForm.appendChild(routeDescription);
 	updateForm.appendChild(descriptionInput);
 	updateForm.appendChild(document.createElement('br'));
+	let updateRoute = route;
+	updateRoute.date = updateForm.date.value;
+	console.log("dateInput: " + dateInput.value)
+	updateRoute.location = updateForm.location.value;
+	updateRoute.distance = updateForm.distance.value;
+	updateRoute.time = updateForm.time.value;
+	updateRoute.pace = updateForm.pace.value;
+	updateRoute.description = updateForm.route.value;
 
 	let button = document.createElement('button');
 	button.textContent = "Update Hike";
-	button.setAttribute('id', 'updateRoute');
-	button.addEventListener('click', function(e) {
-		e.preventDefault();
-
-
-		let updateRoute = {
-
-			date: updateForm.date.value,
-			location: updateForm.location.value,
-			distance: updateForm.distance.value,
-			time: updateForm.time.value,
-			pace: updateForm.pace.value,
-			description: updateForm.description.value
-		};
-		sendUpdate(updateRoute);
-	});
+	button.setAttribute('id', 'updateButton');
 	updateForm.appendChild(button);
-	div.appendChild(updateForm);
+
+	button.addEventListener('click', function(e) {
+		console.log("date" + updateForm.date.value);
+		console.log(updateRoute);
+		e.preventDefault();
+		updateRoute.date = updateForm.date.value;
+		console.log("dateInput: " + dateInput.value)
+		updateRoute.location = updateForm.location.value;
+		updateRoute.distance = updateForm.distance.value;
+		updateRoute.time = updateForm.time.value;
+		updateRoute.pace = updateForm.pace.value;
+		updateRoute.description = updateForm.route.value;
+		/*	//e.preventDefault();
+	
+			 updateRoute = {
+	
+				date: updateForm.date.value,
+				location: updateForm.location.value,
+				distance: updateForm.distance.value,
+				time: updateForm.time.value,
+				pace: updateForm.pace.value,
+				description: updateForm.route.value
+				
+			};
+			console.log("date"+ dateInput.value );
+			console.log("updateRoute"+ updateRoute );
+			console.log("updateRoute date"+ updateRoute.date );
+			sendUpdate(updateRoute);*/
+
+
+		let xhr = new XMLHttpRequest();
+		xhr.open('PATCH', `api/routes/${route.id}`);
+		xhr.setRequestHeader("Content-type", "application/json");
+		xhr.onreadystatechange = function() {
+			console.log('inside of SendUpdate');
+			if (xhr.readyState === 4) {
+				console.log('xhrstatus' + xhr.status);
+				if (xhr.status == 200 || xhr.status == 201) {
+
+
+					let editedRoute = JSON.parse(xhr.responseText);
+					console.log("Edited route: " + editedRoute);
+					console.log('Updated Hike');
+					route = editedRoute;
+					console.log('route' + route);
+				} else {
+					console.log('Error updating: ' + xhr.status);
+				}
+			}
+		};
+		xhr.send(JSON.stringify(updateRoute));
+
+
+
+	});
+	console.log("date" + dateInput.value);
+	console.log("updateRoute" + updateRoute);
+	console.log("updateRoute date" + updateRoute.date);
+	route.date = dateInput.value;
+	route.location = updateForm.location.value;
+	route.distance = updateForm.distance.value;
+	route.time = updateForm.time.value;
+	route.pace = updateForm.pace.value;
+	route.description = updateForm.route.value;
+	console.log("updateRoute" + updateRoute);
+	//sendUpdate(updateRoute);
+
+
 }
 
-function sendUpdate(route) {
+/*function sendUpdate(route) {
+				console.log('route' + route);
 	let xhr = new XMLHttpRequest();
 	xhr.open('PATCH', `api/routes/${route.id}`);
+	xhr.setRequestHeader("Content-type", "application/json");
 	xhr.onreadystatechange = function() {
+		console.log('inside of SendUpdate');
 		if (xhr.readyState === 4) {
-			if (xhr.status < 201) {
-				let route = JSON.parse(xhr.responseText);
+		console.log('xhrstatus' + xhr.status);
+			if (xhr.status == 201 || xhr.status == 200) {
+				
+				
+				let editedRoute = JSON.parse(xhr.responseText);
 				console.log('Updated Hike');
-
-
+				route = editedRoute;
+				console.log('route' + route);
 			} else {
 				console.log('Error updating: ' + xhr.status);
 			}
 		}
 	};
-	xhr.setRequestHeader("Content-type", "application/json");
 	xhr.send(JSON.stringify(route));
 }
-
+*/
 function deleteHike(route) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('DELETE', `api/routes/${route.id}`);
